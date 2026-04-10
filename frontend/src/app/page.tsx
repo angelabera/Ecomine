@@ -6,7 +6,6 @@ import ScannerModal from '@/components/ScannerModal';
 import TokenomicsModal from '@/components/TokenomicsModal';
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
-import Link from 'next/link';
 
 const Map = dynamic(() => import('@/components/Map'), { 
   ssr: false,
@@ -20,7 +19,6 @@ export default function Home() {
   const [isSmartContractsOpen, setIsSmartContractsOpen] = useState(false);
   const [isTokenomicsOpen, setIsTokenomicsOpen] = useState(false);
   const [verificationSuccess, setVerificationSuccess] = useState(false);
-  const [isPolicyMenuOpen, setIsPolicyMenuOpen] = useState(false);
 
   const handleScanComplete = (result: any) => {
     setScanResult(result);
@@ -30,73 +28,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-neutral-950 text-white font-[family-name:var(--font-geist-sans)] selection:bg-emerald-500/30">
-      {/* Left Corner Policy Navigation */}
-      <div className="fixed left-6 top-24 z-40">
-        <div className="relative">
-          <button
-            onClick={() => setIsPolicyMenuOpen(!isPolicyMenuOpen)}
-            className="p-3 bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 border border-emerald-500/50 hover:border-emerald-400/80 rounded-lg transition-all duration-300 shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20"
-            title="Policies & Legal"
-          >
-            <svg className="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C6.498 6.253 3 9.866 3 14.477V19.5c0 .828.895 1.5 2 1.5h14c1.105 0 2-.672 2-1.5v-5.023C21 9.866 17.502 6.253 12 6.253z" />
-            </svg>
-          </button>
-
-          {/* Dropdown Menu */}
-          {isPolicyMenuOpen && (
-            <div className="absolute top-full left-0 mt-2 w-56 bg-neutral-900/95 backdrop-blur-xl border border-emerald-500/30 rounded-xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-300">
-              <div className="p-3 border-b border-emerald-500/20">
-                <p className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Policies & Legal</p>
-              </div>
-              <nav className="space-y-1 p-2">
-                <Link
-                  href="/privacy-policy"
-                  className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-200 hover:bg-emerald-500/10 hover:text-emerald-400 transition-colors group"
-                  onClick={() => setIsPolicyMenuOpen(false)}
-                >
-                  <svg className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
-                  <span className="text-sm font-medium">Privacy Policy</span>
-                </Link>
-                <Link
-                  href="/terms-of-service"
-                  className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-200 hover:bg-emerald-500/10 hover:text-emerald-400 transition-colors group"
-                  onClick={() => setIsPolicyMenuOpen(false)}
-                >
-                  <svg className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                  <span className="text-sm font-medium">Terms of Service</span>
-                </Link>
-                <Link
-                  href="/cookie-policy"
-                  className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-200 hover:bg-emerald-500/10 hover:text-emerald-400 transition-colors group"
-                  onClick={() => setIsPolicyMenuOpen(false)}
-                >
-                  <svg className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                  <span className="text-sm font-medium">Cookie Policy</span>
-                </Link>
-              </nav>
-              <div className="px-4 py-2 bg-neutral-950/50 border-t border-emerald-500/20">
-                <p className="text-xs text-neutral-500">© 2026 EcoMine</p>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Close menu when clicking outside */}
-      {isPolicyMenuOpen && (
-        <div 
-          className="fixed inset-0 z-30"
-          onClick={() => setIsPolicyMenuOpen(false)}
-        />
-      )}
-
       {/* Navbar */}
       <nav className="fixed top-0 w-full z-50 border-b border-white/10 bg-black/50 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -211,6 +142,112 @@ export default function Home() {
           
           <div className="order-first lg:order-last relative">
             <EarthScene />
+          </div>
+        </div>
+
+        {/* Interactive Options Section */}
+        <div className="pt-20 pb-20">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                Ready to Start?
+              </h2>
+              <p className="text-xl text-neutral-400">
+                Choose your path and begin your e-waste recycling journey
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Scan Device Option */}
+              <div 
+                onClick={() => setIsScannerOpen(true)}
+                className="group relative cursor-pointer overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-950/40 to-emerald-950/10 border border-emerald-500/30 p-8 transition-all duration-500 hover:border-emerald-500/80 hover:shadow-2xl hover:shadow-emerald-500/20"
+              >
+                {/* Background glow effect */}
+                <div className="absolute -top-20 -right-20 w-40 h-40 bg-emerald-500/20 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-emerald-500/0 group-hover:from-emerald-500/5 group-hover:to-emerald-500/10 transition-all duration-500"></div>
+
+                {/* Content */}
+                <div className="relative z-10 space-y-6">
+                  {/* Icon */}
+                  <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 ring-1 ring-emerald-500/50 flex items-center justify-center group-hover:bg-emerald-500/30 group-hover:ring-emerald-500/80 transition-all duration-300">
+                    <svg className="w-8 h-8 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
+                    </svg>
+                  </div>
+
+                  {/* Title */}
+                  <div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 group-hover:text-emerald-300 transition-colors">
+                      Scan Device
+                    </h3>
+                    <p className="text-neutral-400 group-hover:text-neutral-300 transition-colors leading-relaxed">
+                      Use our AI-powered camera to scan your e-waste instantly. Our PyTorch model will identify materials and calculate your rewards in real-time.
+                    </p>
+                  </div>
+
+                  {/* Stats */}
+                  <div className="pt-4 border-t border-emerald-500/20">
+                    <div className="flex items-center gap-2 text-sm text-emerald-400 group-hover:text-emerald-300 transition-colors font-semibold">
+                      <span>Instant Valuation</span>
+                      <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* CTA Button */}
+                  <button className="w-full mt-6 py-3 px-6 bg-emerald-500/20 text-emerald-400 font-semibold rounded-xl border border-emerald-500/50 group-hover:bg-emerald-500 group-hover:text-white group-hover:border-emerald-500 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/30">
+                    Start Scanning
+                  </button>
+                </div>
+              </div>
+
+              {/* Manual Entry Option */}
+              <div 
+                onClick={() => setIsScannerOpen(true)}
+                className="group relative cursor-pointer overflow-hidden rounded-3xl bg-gradient-to-br from-cyan-950/40 to-cyan-950/10 border border-cyan-500/30 p-8 transition-all duration-500 hover:border-cyan-500/80 hover:shadow-2xl hover:shadow-cyan-500/20"
+              >
+                {/* Background glow effect */}
+                <div className="absolute -top-20 -left-20 w-40 h-40 bg-cyan-500/20 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 to-cyan-500/0 group-hover:from-cyan-500/5 group-hover:to-cyan-500/10 transition-all duration-500"></div>
+
+                {/* Content */}
+                <div className="relative z-10 space-y-6">
+                  {/* Icon */}
+                  <div className="w-16 h-16 rounded-2xl bg-cyan-500/20 ring-1 ring-cyan-500/50 flex items-center justify-center group-hover:bg-cyan-500/30 group-hover:ring-cyan-500/80 transition-all duration-300">
+                    <svg className="w-8 h-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                    </svg>
+                  </div>
+
+                  {/* Title */}
+                  <div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">
+                      Enter Specs Manually
+                    </h3>
+                    <p className="text-neutral-400 group-hover:text-neutral-300 transition-colors leading-relaxed">
+                      Know your device details already? Input device specifications manually to get an instant valuation without needing to scan.
+                    </p>
+                  </div>
+
+                  {/* Stats */}
+                  <div className="pt-4 border-t border-cyan-500/20">
+                    <div className="flex items-center gap-2 text-sm text-cyan-400 group-hover:text-cyan-300 transition-colors font-semibold">
+                      <span>Fast & Precise</span>
+                      <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* CTA Button */}
+                  <button className="w-full mt-6 py-3 px-6 bg-cyan-500/20 text-cyan-400 font-semibold rounded-xl border border-cyan-500/50 group-hover:bg-cyan-500 group-hover:text-white group-hover:border-cyan-500 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/30">
+                    Enter Specifications
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
