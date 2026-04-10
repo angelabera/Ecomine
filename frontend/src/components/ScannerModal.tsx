@@ -421,9 +421,8 @@ export default function ScannerModal({ onClose, onScanComplete }: ScannerModalPr
                             className="p-2 bg-cyan-500 hover:bg-cyan-600 rounded-full text-white transition-colors"
                             title="Retake image"
                           >
-                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                              <path d="M4 3.5c0-.828.672-1.5 1.5-1.5h9C15.328 2 16 2.672 16 3.5v13c0 .828-.672 1.5-1.5 1.5h-9C4.672 18 4 17.328 4 16.5v-13zM5.5 3h8v12h-8V3z"/>
-                              <path d="M10 5c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3z"/>
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                             </svg>
                           </button>
                           <button
