@@ -16,7 +16,7 @@ export default function SmartContractPage() {
             </div>
             <div className="bg-gray-700 p-4 rounded">
               <h3 className="text-xl font-semibold mb-2">Network</h3>
-              <p className="text-sm text-gray-400">Ethereum</p>
+              <p className="text-sm text-gray-400">Polygon Mainnet</p>
             </div>
           </div>
         </div>
