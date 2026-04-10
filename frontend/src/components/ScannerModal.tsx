@@ -171,6 +171,14 @@ export default function ScannerModal({ onClose, onScanComplete }: ScannerModalPr
     setCapturedImages(newImages);
   };
 
+  const retakeImage = (index: number) => {
+    // Remove the image at this index
+    const newImages = capturedImages.filter((_, i) => i !== index);
+    setCapturedImages(newImages);
+    // Set current angle to this index so user can retake
+    setCurrentAngleIndex(index);
+  };
+
   const analyzeImages = async () => {
     if (capturedImages.length === 0) return;
 
@@ -408,6 +416,16 @@ export default function ScannerModal({ onClose, onScanComplete }: ScannerModalPr
                       <div className="relative aspect-square rounded-lg overflow-hidden border-2 border-emerald-500/50 bg-black">
                         <img src={item.image} alt={`Angle ${idx + 1}`} className="w-full h-full object-cover" />
                         <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                          <button
+                            onClick={() => retakeImage(idx)}
+                            className="p-2 bg-cyan-500 hover:bg-cyan-600 rounded-full text-white transition-colors"
+                            title="Retake image"
+                          >
+                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M4 3.5c0-.828.672-1.5 1.5-1.5h9C15.328 2 16 2.672 16 3.5v13c0 .828-.672 1.5-1.5 1.5h-9C4.672 18 4 17.328 4 16.5v-13zM5.5 3h8v12h-8V3z"/>
+                              <path d="M10 5c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3z"/>
+                            </svg>
+                          </button>
                           <button
                             onClick={() => removeImage(idx)}
                             className="p-2 bg-red-500 hover:bg-red-600 rounded-full text-white transition-colors"
