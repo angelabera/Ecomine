@@ -4,6 +4,7 @@ import EarthScene from '@/components/EarthScene';
 import WalletConnect from '@/components/WalletConnect';
 import ScannerModal from '@/components/ScannerModal';
 import TokenomicsModal from '@/components/TokenomicsModal';
+import ManualEntryModal from '@/components/ManualEntryModal';
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
 
@@ -14,6 +15,7 @@ const Map = dynamic(() => import('@/components/Map'), {
 
 export default function Home() {
   const [isScannerOpen, setIsScannerOpen] = useState(false);
+  const [isManualEntryOpen, setIsManualEntryOpen] = useState(false);
   const [scanResult, setScanResult] = useState<any>(null);
   const [isLedgerOpen, setIsLedgerOpen] = useState(false);
   const [isSmartContractsOpen, setIsSmartContractsOpen] = useState(false);
@@ -205,7 +207,7 @@ export default function Home() {
 
               {/* Manual Entry Option */}
               <div 
-                onClick={() => setIsScannerOpen(true)}
+                onClick={() => setIsManualEntryOpen(true)}
                 className="group relative cursor-pointer overflow-hidden rounded-3xl bg-gradient-to-br from-cyan-950/40 to-cyan-950/10 border border-cyan-500/30 p-8 transition-all duration-500 hover:border-cyan-500/80 hover:shadow-2xl hover:shadow-cyan-500/20"
               >
                 {/* Background glow effect */}
@@ -292,6 +294,11 @@ export default function Home() {
           onScanComplete={handleScanComplete} 
         />
       )}
+
+      <ManualEntryModal 
+        isOpen={isManualEntryOpen} 
+        onClose={() => setIsManualEntryOpen(false)} 
+      />
 
       {isLedgerOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
