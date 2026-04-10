@@ -26,6 +26,45 @@ export default function ScannerModal({ onClose, onScanComplete }: ScannerModalPr
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisResults, setAnalysisResults] = useState<any>(null);
 
+  // Add CSS styles for animations
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes scanning-line {
+        0% {
+          top: 0%;
+        }
+        50% {
+          top: 50%;
+        }
+        100% {
+          top: 100%;
+        }
+      }
+
+      @keyframes corner-pulse {
+        0%, 100% {
+          opacity: 0.4;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      .scanning-line {
+        animation: scanning-line 2s ease-in-out infinite;
+      }
+
+      .corner-box {
+        animation: corner-pulse 1.5s ease-in-out infinite;
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
   // Initialize camera only once
   useEffect(() => {
     let isMounted = true;
@@ -116,7 +155,10 @@ export default function ScannerModal({ onClose, onScanComplete }: ScannerModalPr
         setCurrentAngleIndex(currentAngleIndex + 1);
       }
 
-      setIsCapturing(false);
+      // Show scanning animation for 2 seconds before finishing
+      setTimeout(() => {
+        setIsCapturing(false);
+      }, 2000);
     } catch (err) {
       console.error('Capture error:', err);
       setError('Failed to capture image. Please try again.');
@@ -253,12 +295,67 @@ export default function ScannerModal({ onClose, onScanComplete }: ScannerModalPr
                 )}
 
                 {isCapturing && (
-                  <div className="absolute inset-0 bg-white/20 flex items-center justify-center">
-                    <svg className="w-16 h-16 text-emerald-400 animate-spin" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+                  <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center">
+                    {/* Corner boxes */}
+                    <div className="absolute top-8 left-8 w-12 h-12 border-2 border-emerald-400 corner-box"></div>
+                    <div className="absolute top-8 right-8 w-12 h-12 border-2 border-emerald-400 corner-box" style={{ animationDelay: '0.3s' }}></div>
+                    <div className="absolute bottom-8 left-8 w-12 h-12 border-2 border-emerald-400 corner-box" style={{ animationDelay: '0.6s' }}></div>
+                    <div className="absolute bottom-8 right-8 w-12 h-12 border-2 border-emerald-400 corner-box" style={{ animationDelay: '0.9s' }}></div>
+
+                    {/* Scanning line */}
+                    <div className="absolute inset-0 overflow-hidden">
+                      <div className="scanning-line absolute left-0 right-0 h-1 bg-gradient-to-b from-emerald-400/80 via-emerald-300/100 to-emerald-400/0 shadow-lg shadow-emerald-400/50"></div>
+                    </div>
+
+                    {/* Analyzing text and activity */}
+                    <div className="flex flex-col items-center gap-4 z-10">
+                      <div className="text-center space-y-2">
+                        <p className="text-emerald-300 font-bold text-lg">Analyzing on PyTorch</p>
+                        <p className="text-emerald-400/80 text-sm font-medium">Processing device materials...</p>
+                      </div>
+                      
+                      {/* Circular progress indicator */}
+                      <div className="relative w-16 h-16">
+                        <svg className="w-full h-full drop-shadow-lg" viewBox="0 0 100 100">
+                          {/* Background circle */}
+                          <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(16,185,129,0.2)" strokeWidth="2"/>
+                          {/* Animated progress circle */}
+                          <circle
+                            cx="50"
+                            cy="50"
+                            r="45"
+                            fill="none"
+                            stroke="url(#gradient)"
+                            strokeWidth="3"
+                            strokeDasharray="283"
+                            strokeDashoffset="0"
+                            style={{
+                              animation: 'spin 2s linear infinite',
+                              transform: 'rotate(-90deg)',
+                              transformOrigin: '50% 50%'
+                            }}
+                          />
+                          <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                              <stop offset="0%" stopColor="#10b981" />
+                              <stop offset="100%" stopColor="#06b6d4" />
+                            </linearGradient>
+                          </defs>
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-emerald-400 text-sm font-bold">AI</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 )}
+
+                <style>{`
+                  @keyframes spin {
+                    from { transform: rotate(-90deg); }
+                    to { transform: rotate(270deg); }
+                  }
+                `}</style>
               </div>
 
               {/* Current Angle Instruction */}
