@@ -5,9 +5,10 @@ import { useState } from 'react';
 interface ManualEntryModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSubmit?: (result: any) => void;
 }
 
-export default function ManualEntryModal({ isOpen, onClose }: ManualEntryModalProps) {
+export default function ManualEntryModal({ isOpen, onClose, onSubmit }: ManualEntryModalProps) {
   const [step, setStep] = useState(1);
   const [brandName, setBrandName] = useState('');
   const [modelNo, setModelNo] = useState('');
@@ -23,9 +24,28 @@ export default function ManualEntryModal({ isOpen, onClose }: ManualEntryModalPr
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    // Simulate API call
+    // Simulate API call and generate mock results
     setTimeout(() => {
+      // Generate realistic material data based on device type
+      const mockResult = {
+        device_model: `${brandName} ${modelNo}`,
+        materials: {
+          "Gold (g)": (Math.random() * 0.08 + 0.02).toFixed(3),
+          "Copper (g)": (Math.random() * 18 + 8).toFixed(2),
+          "Lithium (g)": (Math.random() * 4 + 2).toFixed(2)
+        },
+        eco_reward: (Math.random() * 12 + 4).toFixed(2),
+        confidence: (Math.random() * 15 + 85).toFixed(1),
+        entry_method: "manual"
+      };
+
       setIsLoading(false);
+      
+      // Call parent's onSubmit handler if provided
+      if (onSubmit) {
+        onSubmit(mockResult);
+      }
+      
       resetForm();
       onClose();
     }, 1500);

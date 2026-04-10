@@ -5,7 +5,7 @@ import WalletConnect from '@/components/WalletConnect';
 import ScannerModal from '@/components/ScannerModal';
 import TokenomicsModal from '@/components/TokenomicsModal';
 import ManualEntryModal from '@/components/ManualEntryModal';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 
 const Map = dynamic(() => import('@/components/Map'), { 
@@ -21,12 +21,28 @@ export default function Home() {
   const [isSmartContractsOpen, setIsSmartContractsOpen] = useState(false);
   const [isTokenomicsOpen, setIsTokenomicsOpen] = useState(false);
   const [verificationSuccess, setVerificationSuccess] = useState(false);
+  const resultCardRef = useRef<HTMLDivElement>(null);
 
   const handleScanComplete = (result: any) => {
     setScanResult(result);
     setVerificationSuccess(false);
     setIsScannerOpen(false);
   };
+
+  const handleManualEntryComplete = (result: any) => {
+    setScanResult(result);
+    setVerificationSuccess(false);
+    setIsManualEntryOpen(false);
+  };
+
+  // Scroll to result card when scan/manual entry is completed
+  useEffect(() => {
+    if (scanResult && resultCardRef.current) {
+      setTimeout(() => {
+        resultCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 300);
+    }
+  }, [scanResult]);
 
   return (
     <div className="min-h-screen bg-neutral-950 text-white font-[family-name:var(--font-geist-sans)] selection:bg-emerald-500/30">
@@ -91,7 +107,7 @@ export default function Home() {
             
             {/* Display Scan Result dynamically */}
             {scanResult && !verificationSuccess && (
-              <div className="bg-emerald-950/40 border border-emerald-500/20 p-6 rounded-2xl animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <div ref={resultCardRef} className="bg-emerald-950/40 border border-emerald-500/20 p-6 rounded-2xl animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="flex gap-4 mb-4 text-sm text-neutral-300">
                   <p>Copper: <span className="font-mono">{scanResult.materials['Copper (g)']}g</span></p>
                   <p>Gold: <span className="font-mono">{scanResult.materials['Gold (g)']}g</span></p>
@@ -297,7 +313,8 @@ export default function Home() {
 
       <ManualEntryModal 
         isOpen={isManualEntryOpen} 
-        onClose={() => setIsManualEntryOpen(false)} 
+        onClose={() => setIsManualEntryOpen(false)}
+        onSubmit={handleManualEntryComplete}
       />
 
       {isLedgerOpen && (
