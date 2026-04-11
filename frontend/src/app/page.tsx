@@ -5,6 +5,7 @@ import WalletConnect from '@/components/WalletConnect';
 import ScannerModal from '@/components/ScannerModal';
 import TokenomicsModal from '@/components/TokenomicsModal';
 import ManualEntryModal from '@/components/ManualEntryModal';
+import CertifiedPartnersCarousel from '@/components/CertifiedPartnersCarousel';
 import { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 
@@ -301,6 +302,9 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* Certified Partners Carousel */}
+        <CertifiedPartnersCarousel />
       </main>
 
       {/* Render modals */}
