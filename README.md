@@ -1,4 +1,4 @@
-# 🌍 ECOMINE 
+﻿# 🌍 ECOMINE 
 
 An experimental full-stack platform combining **Web3, AI, and geospatial visualization** to create an interactive and decentralized ecosystem.
 
@@ -14,7 +14,7 @@ An experimental full-stack platform combining **Web3, AI, and geospatial visuali
 
 ECOMINE explores the intersection of **blockchain technology, artificial intelligence, and real-world mapping** to build a system where digital intelligence meets physical geography.
 
-> The goal is simple: turn complex technologies into intuitive, visual experiences.
+> The goal is simple: turn complex technologies into intuitive, visual experiences in a decentralized way
 
 ---
 
