@@ -76,7 +76,7 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <main className="pt-32 pb-20 px-6 max-w-7xl mx-auto space-y-12">
+      <main id="hero" className="pt-32 pb-20 px-6 max-w-7xl mx-auto space-y-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             <h1 className="text-5xl md:text-7xl font-bold leading-[1.1] tracking-tight">
@@ -164,7 +164,7 @@ export default function Home() {
         </div>
 
         {/* Interactive Options Section */}
-        <div className="pt-20 pb-20">
+        <div id="scanner" className="pt-20 pb-20">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -270,7 +270,7 @@ export default function Home() {
         </div>
 
         {/* Features / Drop Zones */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-16">
+        <div id="map" className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-16">
           <div className="bg-neutral-900 border border-white/5 rounded-3xl p-8 space-y-6 shadow-2xl relative overflow-hidden group">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-cyan-500 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
             <h3 className="text-2xl font-bold">Green Drop Zones</h3>
